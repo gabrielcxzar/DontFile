@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DontFile - Compartilhe arquivos facilmente</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      padding: 30px;
+    }
+
+    h1 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+    }
+
+    .url-info {
+      background: #f7fafc;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border-left: 4px solid #667eea;
+    }
+
+    .url-info strong {
+      color: #667eea;
+      font-size: 1.2em;
+    }
+
+    .upload-area {
+      border: 3px dashed #cbd5e0;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin: 20px 0;
+    }
+
+    .upload-area:hover {
+      border-color: #667eea;
+      background: #f7fafc;
+    }
+
+    .upload-area.dragging {
+      border-color: #667eea;
+      background: #edf2f7;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #5568d3;
+    }
+
+    .btn-delete {
+      background: #f56565;
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+
+    .btn-delete:hover {
+      background: #e53e3e;
+    }
+
+    .files-list {
+      margin-top: 30px;
+    }
+
+    .file-item {
+      background: #f7fafc;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s;
+    }
+
+    .file-item:hover {
+      transform: translateX(5px);
+    }
+
+    .file-info {
+      flex: 1;
+    }
+
+    .file-name {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 5px;
+    }
+
+    .file-meta {
+      font-size: 0.85em;
+      color: #718096;
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 20px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #667eea;
+      transition: width 0.3s;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #a0aec0;
+      padding: 40px;
+    }
+
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #718096;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📁 DontFile</h1>
+    <p style="color: #718096; margin-bottom: 20px;">Compartilhe arquivos sem complicação. Sem login, sem limite de tempo.</p>
+
+    <div class="url-info">
+      <p>🔗 Sua sala: <strong id="roomName"></strong></p>
+      <p style="margin-top: 8px; font-size: 0.9em; color: #718096;">Compartilhe este link com qualquer pessoa para acessar os mesmos arquivos!</p>
+    </div>
+
+    <div class="upload-area" id="uploadArea">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      <p style="margin-top: 15px; color: #4a5568; font-weight: 600;">Clique aqui ou arraste arquivos</p>
+      <p style="margin-top: 5px; color: #a0aec0; font-size: 0.9em;">Limite: 50MB por arquivo</p>
+      <input type="file" id="fileInput" multiple>
+    </div>
+
+    <div class="progress" id="progressBar">
+      <div class="progress-bar" id="progressBarFill"></div>
+    </div>
+
+    <div class="files-list">
+      <h2 style="margin-bottom: 15px; color: #2d3748;">Arquivos nesta sala</h2>
+      <div id="filesList"></div>
+    </div>
+
+    <footer>
+      Inspirado no dontpad.com | Feito com ❤️
+    </footer>
+  </div>
+
+  <script>
+    // Pega o nome da sala da URL (ex: /sala123)
+    const roomName = window.location.pathname.slice(1) || 'principal';
+    document.getElementById('roomName').textContent = roomName;
+
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const filesList = document.getElementById('filesList');
+    const progressBar = document.getElementById('progressBar');
+    const progressBarFill = document.getElementById('progressBarFill');
+
+    // Carrega os arquivos ao abrir a página
+    loadFiles();
+
+    // Click na área de upload
+    uploadArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    // Quando seleciona arquivos
+    fileInput.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragging');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragging');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragging');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    // Função para fazer upload dos arquivos
+    async function handleFiles(files) {
+      for (let file of files) {
+        if (file.size > 50 * 1024 * 1024) {
+          alert(`❌ Arquivo "${file.name}" é muito grande (máx: 50MB)`);
+          continue;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        progressBar.style.display = 'block';
+        progressBarFill.style.width = '0%';
+
+        try {
+          const xhr = new XMLHttpRequest();
+          
+          // Atualiza a barra de progresso
+          xhr.upload.addEventListener('progress', (e) => {
+            if (e.lengthComputable) {
+              const percent = (e.loaded / e.total) * 100;
+              progressBarFill.style.width = percent + '%';
+            }
+          });
+
+          xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+              console.log('✅ Upload completo:', file.name);
+              loadFiles(); // Recarrega a lista
+              progressBar.style.display = 'none';
+            } else {
+              alert('❌ Erro no upload: ' + file.name);
+            }
+          });
+
+          xhr.open('POST', `/api/${roomName}/upload`);
+          xhr.send(formData);
+
+        } catch (error) {
+          console.error('Erro:', error);
+          alert('❌ Erro ao enviar arquivo');
+        }
+      }
+
+      fileInput.value = ''; // Limpa o input
+    }
+
+    // Carrega a lista de arquivos
+    async function loadFiles() {
+      try {
+        const response = await fetch(`/api/${roomName}/files`);
+        const files = await response.json();
+
+        if (files.length === 0) {
+          filesList.innerHTML = `
+            <div class="empty-state">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                <polyline points="13 2 13 9 20 9"></polyline>
+              </svg>
+              <p>Nenhum arquivo nesta sala ainda</p>
+              <p style="margin-top: 5px;">Faça upload do primeiro arquivo!</p>
+            </div>
+          `;
+          return;
+        }
+
+        filesList.innerHTML = files.map(file => `
+          <div class="file-item">
+            <div class="file-info">
+              <div class="file-name">📄 ${file.name}</div>
+              <div class="file-meta">
+                ${formatBytes(file.size)} • ${formatDate(file.uploadDate)}
+              </div>
+            </div>
+            <div class="file-actions">
+              <button class="btn" onclick="downloadFile('${file.name}')">⬇ Baixar</button>
+              <button class="btn btn-delete" onclick="deleteFile('${file.name}')">🗑 Deletar</button>
+            </div>
+          </div>
+        `).join('');
+
+      } catch (error) {
+        console.error('Erro ao carregar arquivos:', error);
+      }
+    }
+
+    // Download de arquivo
+    function downloadFile(filename) {
+      window.location.href = `/api/${roomName}/download/${encodeURIComponent(filename)}`;
+    }
+
+    // Deletar arquivo
+    async function deleteFile(filename) {
+      if (!confirm(`Tem certeza que deseja deletar "${filename}"?`)) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/${roomName}/delete/${encodeURIComponent(filename)}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          loadFiles(); // Recarrega a lista
+        } else {
+          alert('❌ Erro ao deletar arquivo');
+        }
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('❌ Erro ao deletar arquivo');
+      }
+    }
+
+    // Formata bytes para KB, MB, etc
+    function formatBytes(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    // Formata data
+    function formatDate(date) {
+      return new Date(date).toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Atualiza a lista a cada 5 segundos
+    setInterval(loadFiles, 5000);
+  </script>
+</body>
+</html>
