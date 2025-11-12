@@ -6,14 +6,12 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configuração do Multer para upload de arquivos
-// Cada "sala" terá sua própria pasta baseada na URL
+// Configuração do Multer... (sem mudanças aqui)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const roomName = req.params.room;
     const uploadPath = path.join(__dirname, 'uploads', roomName);
     
-    // Cria a pasta se não existir
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
@@ -21,47 +19,44 @@ const storage = multer.diskStorage({
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    // Mantém o nome original do arquivo
     cb(null, file.originalname);
   }
 });
 
-// Limite de 50MB por arquivo
 const upload = multer({ 
   storage: storage,
-  limits: { fileSize: 50 * 1024 * 1024 } // 50MB em bytes
+  limits: { fileSize: 50 * 1024 * 1024 } // 50MB
 });
 
 // Servir arquivos estáticos (HTML, CSS, JS)
 app.use(express.static('public'));
 
-// Rota principal - serve o HTML
+// --- MUDANÇA AQUI ---
+// Rota principal - serve a página de CRIAÇÃO de sala
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'create_room.html'));
 });
+// --- FIM DA MUDANÇA ---
 
 // Rota dinâmica para cada "sala"
 app.get('/:room', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// API: Listar arquivos de uma sala
+// API: Listar arquivos... (sem mudanças)
 app.get('/api/:room/files', (req, res) => {
   const roomName = req.params.room;
   const uploadPath = path.join(__dirname, 'uploads', roomName);
   
-  // Se a pasta não existe, retorna lista vazia
   if (!fs.existsSync(uploadPath)) {
     return res.json([]);
   }
   
-  // Lista todos os arquivos da sala
   fs.readdir(uploadPath, (err, files) => {
     if (err) {
       return res.status(500).json({ error: 'Erro ao listar arquivos' });
     }
     
-    // Pega informações detalhadas de cada arquivo
     const fileDetails = files.map(filename => {
       const filePath = path.join(uploadPath, filename);
       const stats = fs.statSync(filePath);
@@ -77,7 +72,7 @@ app.get('/api/:room/files', (req, res) => {
   });
 });
 
-// API: Upload de arquivo
+// API: Upload de arquivo... (sem mudanças)
 app.post('/api/:room/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'Nenhum arquivo enviado' });
@@ -90,33 +85,29 @@ app.post('/api/:room/upload', upload.single('file'), (req, res) => {
   });
 });
 
-// API: Download de arquivo
+// API: Download de arquivo... (sem mudanças)
 app.get('/api/:room/download/:filename', (req, res) => {
   const roomName = req.params.room;
   const filename = req.params.filename;
   const filePath = path.join(__dirname, 'uploads', roomName, filename);
   
-  // Verifica se o arquivo existe
   if (!fs.existsSync(filePath)) {
     return res.status(404).json({ error: 'Arquivo não encontrado' });
   }
   
-  // Envia o arquivo para download
   res.download(filePath, filename);
 });
 
-// API: Deletar arquivo
+// API: Deletar arquivo... (sem mudanças)
 app.delete('/api/:room/delete/:filename', (req, res) => {
   const roomName = req.params.room;
   const filename = req.params.filename;
   const filePath = path.join(__dirname, 'uploads', roomName, filename);
   
-  // Verifica se o arquivo existe
   if (!fs.existsSync(filePath)) {
     return res.status(404).json({ error: 'Arquivo não encontrado' });
   }
   
-  // Deleta o arquivo
   fs.unlink(filePath, (err) => {
     if (err) {
       return res.status(500).json({ error: 'Erro ao deletar arquivo' });

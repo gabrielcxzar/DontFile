@@ -163,4 +163,93 @@
       color: #718096;
       font-size: 0.9em;
     }
- 
+/* --- NOVOS ESTILOS (Adicionar no final) --- */
+
+/* --- Estilos para a página create_room.html --- */
+.create-room-container {
+  max-width: 600px; /* Um pouco menor */
+  text-align: center;
+  margin-top: 50px; /* Centraliza mais na tela */
+}
+
+.create-room-container h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.create-room-container h1 .fa-folder-plus {
+  margin-right: 10px;
+  color: #667eea;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.room-input {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  border: 2px solid #cbd5e0;
+  transition: border-color 0.3s;
+}
+
+.room-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.input-group .btn {
+  font-size: 1.1em;
+  padding: 15px 20px;
+}
+
+/* --- Estilos para os Ícones de Arquivo (index.html) --- */
+.file-item .file-info {
+  display: flex; /* Alinha o ícone e o texto */
+  align-items: center;
+  flex: 1;
+  min-width: 0; /* Evita que o nome do arquivo estoure */
+}
+
+.file-icon {
+  font-size: 2.2em; /* Tamanho do ícone */
+  color: #667eea;
+  margin-right: 15px;
+  width: 40px; /* Largura fixa para alinhamento */
+  text-align: center;
+}
+
+/* Cores específicas para ícones (opcional, mas legal) */
+.fa-file-pdf { color: #E53E3E; }
+.fa-python { color: #4B8BBE; }
+.fa-js { color: #F0DB4F; }
+.fa-html5 { color: #E34C26; }
+.fa-css3-alt { color: #264DE4; }
+.fa-file-word { color: #2B579A; }
+.fa-file-excel { color: #217346; }
+.fa-file-powerpoint { color: #D24726; }
+.fa-file-image { color: #a0aec0; }
+.fa-file-zipper { color: #f6a623; }
+
+.file-details {
+  flex: 1;
+  min-width: 0; /* Permite que o nome do arquivo quebre */
+}
+
+.file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adiciona "..." se o nome for muito longo */
+  margin-bottom: 3px; /* Menor espaçamento */
+}
+
+/* Ícones dos botões */
+.btn .fa-solid,
+.btn .fa-brands {
+  margin-right: 8px;
+}

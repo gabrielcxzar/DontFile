@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Sala - DontFile</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <link rel="icon" type="image/png" href="/favicon.png">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+  <div class="container create-room-container">
+    <h1><i class="fa-solid fa-folder-plus"></i> DontFile</h1>
+    <p style="color: #718096; margin-bottom: 20px;">Crie uma sala para começar a compartilhar.</p>
+
+    <div class="input-group">
+      <input type="text" id="roomNameInput" class="room-input" placeholder="Digite o nome da sala (ex: aula-faculdade)">
+      <button id="createRoomBtn" class="btn">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> Entrar
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function goToRoom() {
+      const roomName = document.getElementById('roomNameInput').value.trim();
+      if (roomName) {
+        // Redireciona para a sala
+        window.location.href = `/${encodeURIComponent(roomName)}`;
+      } else {
+        alert('Por favor, digite um nome para a sala.');
+      }
+    }
+
+    // Evento do clique no botão
+    document.getElementById('createRoomBtn').addEventListener('click', goToRoom);
+
+    // Evento da tecla Enter no input
+    document.getElementById('roomNameInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        goToRoom();
+      }
+    });
+  </script>
+</body>
+</html>
