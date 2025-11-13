@@ -1,255 +1,312 @@
-   * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      padding: 30px;
-    }
-
-    h1 {
-      color: #667eea;
-      margin-bottom: 10px;
-      font-size: 2.5em;
-    }
-
-    .url-info {
-      background: #f7fafc;
-      padding: 15px;
-      border-radius: 8px;
-      margin: 20px 0;
-      border-left: 4px solid #667eea;
-    }
-
-    .url-info strong {
-      color: #667eea;
-      font-size: 1.2em;
-    }
-
-    .upload-area {
-      border: 3px dashed #cbd5e0;
-      border-radius: 8px;
-      padding: 40px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin: 20px 0;
-    }
-
-    .upload-area:hover {
-      border-color: #667eea;
-      background: #f7fafc;
-    }
-
-    .upload-area.dragging {
-      border-color: #667eea;
-      background: #edf2f7;
-    }
-
-    input[type="file"] {
-      display: none;
-    }
-
-    .btn {
-      background: #667eea;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-
-    .btn:hover {
-      background: #5568d3;
-    }
-
-    .btn-delete {
-      background: #f56565;
-      padding: 6px 12px;
-      font-size: 14px;
-    }
-
-    .btn-delete:hover {
-      background: #e53e3e;
-    }
-
-    .files-list {
-      margin-top: 30px;
-    }
-
-    .file-item {
-      background: #f7fafc;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: transform 0.2s;
-    }
-
-    .file-item:hover {
-      transform: translateX(5px);
-    }
-
-    .file-info {
-      flex: 1;
-    }
-
-    .file-name {
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 5px;
-    }
-
-    .file-meta {
-      font-size: 0.85em;
-      color: #718096;
-    }
-
-    .file-actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .progress {
-      width: 100%;
-      height: 20px;
-      background: #e2e8f0;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 10px;
-      display: none;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: #667eea;
-      transition: width 0.3s;
-    }
-
-    .empty-state {
-      text-align: center;
-      color: #a0aec0;
-      padding: 40px;
-    }
-
-    .empty-state svg {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 15px;
-      opacity: 0.5;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 30px;
-      color: #718096;
-      font-size: 0.9em;
-    }
-/* --- NOVOS ESTILOS (Adicionar no final) --- */
-
-/* --- Estilos para a página create_room.html --- */
-.create-room-container {
-  max-width: 600px; /* Um pouco menor */
-  text-align: center;
-  margin-top: 50px; /* Centraliza mais na tela */
+/* --- RESET GERAL E FONTES (Anti-IA) --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.create-room-container h1 {
-  font-size: 3em;
-  margin-bottom: 20px;
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    color: #E0E0E0;
+    line-height: 1.6;
 }
 
-.create-room-container h1 .fa-folder-plus {
-  margin-right: 10px;
-  color: #667eea;
+button {
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 10px 18px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 30px;
+input[type="text"] {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #222;
+    color: white;
+    font-size: 1rem;
 }
 
-.room-input {
-  width: 100%;
-  padding: 15px 20px;
-  font-size: 1.1em;
-  border-radius: 6px;
-  border: 2px solid #cbd5e0;
-  transition: border-color 0.3s;
+/* --- TELA 1: ESTILO DA HOMEPAGE --- */
+
+#homeContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.room-input:focus {
-  outline: none;
-  border-color: #667eea;
+.home-header {
+    padding: 20px 0;
 }
 
-.input-group .btn {
-  font-size: 1.1em;
-  padding: 15px 20px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #E0E0E0;
 }
 
-/* --- Estilos para os Ícones de Arquivo (index.html) --- */
-.file-item .file-info {
-  display: flex; /* Alinha o ícone e o texto */
-  align-items: center;
-  flex: 1;
-  min-width: 0; /* Evita que o nome do arquivo estoure */
+.logo img {
+    width: 40px;
+    height: 40px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.room-creator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: #1f1f1f;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+.room-creator span {
+    color: #888;
+    font-size: 1rem;
+}
+
+.room-creator input {
+    min-width: 200px;
+    background: #333;
+}
+
+#createRoomBtn {
+    background-color: #00C8FF;
+    color: #121212;
+    font-weight: 700;
+}
+
+#createRoomBtn:hover {
+    background-color: #00aadd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 200, 255, 0.2);
+}
+
+.pix-container {
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.pix-container .fa-mug-hot {
+    font-size: 2rem;
+    color: #00C8FF;
+    margin-bottom: 15px;
+}
+
+.pix-container h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.pix-container p {
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+.pix-key {
+    background: #121212;
+    padding: 15px;
+    border-radius: 8px;
+    display: inline-block;
+    border: 1px dashed #444;
+}
+
+.pix-key strong {
+    color: #ccc;
+}
+.pix-key span {
+    color: #fff;
+    font-weight: 500;
+}
+
+/* --- TELA 2: ESTILO DA SALA DE ARQUIVOS --- */
+
+#roomContainer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.room-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.room-name-display {
+    font-size: 1.1rem;
+    color: #aaa;
+}
+.room-name-display span {
+    font-weight: 700;
+    color: #E0E0E0;
+}
+
+.upload-area {
+    border: 2px dashed #444;
+    border-radius: 12px;
+    padding: 60px 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upload-area:hover, .upload-area.dragging {
+    background-color: #1f1f1f;
+    border-color: #00C8FF;
+}
+
+.upload-area .fa-cloud-arrow-up {
+    font-size: 3rem;
+    color: #00C8FF;
+    margin-bottom: 15px;
+}
+
+.upload-area p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.upload-area span {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #00C8FF;
+    transition: width 0.1s linear;
+}
+
+.files-list {
+    margin-top: 20px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px;
+    background: #1f1f1f;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+.empty-state svg {
+    width: 50px;
+    height: 50px;
+    stroke: #888;
+    margin-bottom: 15px;
+}
+.empty-state p {
+    font-size: 1.1rem;
+    color: #aaa;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .file-icon {
-  font-size: 2.2em; /* Tamanho do ícone */
-  color: #667eea;
-  margin-right: 15px;
-  width: 40px; /* Largura fixa para alinhamento */
-  text-align: center;
-}
-
-/* Cores específicas para ícones (opcional, mas legal) */
-.fa-file-pdf { color: #E53E3E; }
-.fa-python { color: #4B8BBE; }
-.fa-js { color: #F0DB4F; }
-.fa-html5 { color: #E34C26; }
-.fa-css3-alt { color: #264DE4; }
-.fa-file-word { color: #2B579A; }
-.fa-file-excel { color: #217346; }
-.fa-file-powerpoint { color: #D24726; }
-.fa-file-image { color: #a0aec0; }
-.fa-file-zipper { color: #f6a623; }
-
-.file-details {
-  flex: 1;
-  min-width: 0; /* Permite que o nome do arquivo quebre */
+    font-size: 1.8rem;
+    color: #00C8FF;
+    width: 30px;
+    text-align: center;
 }
 
 .file-name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* Adiciona "..." se o nome for muito longo */
-  margin-bottom: 3px; /* Menor espaçamento */
+    font-size: 1rem;
+    font-weight: 500;
+    color: #E0E0E0;
 }
 
-/* Ícones dos botões */
-.btn .fa-solid,
-.btn .fa-brands {
-  margin-right: 8px;
+.file-meta {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.file-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background: #333;
+    color: #E0E0E0;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+.btn:hover {
+    background: #444;
+}
+
+.btn-delete {
+    background: #4a2525;
+    color: #ffbaba;
+}
+.btn-delete:hover {
+    background: #612f2f;
 }

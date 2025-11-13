@@ -1,0 +1,17 @@
+# Pasta de dependências do Node.js
+# (A mais importante de todas! É gigante e recriada com 'npm install')
+node_modules/
+
+# Pasta onde os arquivos são salvos pelo multer
+# (Você não quer salvar os arquivos de upload no seu repositório)
+uploads/
+
+# Arquivos de ambiente (para guardar senhas e chaves no futuro)
+.env
+
+# Arquivos de log
+*.log
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
