@@ -310,3 +310,103 @@ input[type="text"] {
 .btn-delete:hover {
     background: #612f2f;
 }
+
+/* --- ESTILO DO RODAPÉ (NOVO) --- */
+.site-footer {
+    text-align: center;
+    padding: 40px 20px 20px 20px;
+    font-size: 0.9rem;
+    color: #888;
+}
+.site-footer .footer-separator {
+    margin: 0 5px;
+}
+.site-footer a {
+    color: #00C8FF;
+    text-decoration: none;
+}
+.site-footer a:hover {
+    text-decoration: underline;
+}
+/* --- ESTILO DO PIX (ATUALIZAÇÃO) --- */
+.pix-key-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.pix-qr-code {
+    width: 200px; /* Largura para o QR Code */
+    height: 200px; /* Altura para o QR Code */
+    background: white; /* Fundo branco para o QR Code */
+    padding: 5px; /* Um pequeno respiro para o QR */
+    border-radius: 8px; /* Cantos arredondados */
+    display: flex; /* Para centralizar o QR gerado */
+    justify-content: center;
+    align-items: center;
+}
+
+.pix-copia-cola p {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.pix-copia-cola .input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.pix-copia-cola input {
+    width: 250px;
+    background: #111;
+    font-weight: 500;
+}
+
+.pix-copia-cola button {
+    background: #333;
+    color: #E0E0E0;
+    min-width: 80px;
+}
+.pix-copia-cola button:hover {
+    background: #444;
+}
+/* --- ESTILO SUPORTE & FEEDBACK (NOVO) --- */
+.support-container {
+    text-align: center;
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 30px;
+    margin: 30px 0;
+}
+
+.support-container h3 {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.support-container p {
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+.btn-support {
+    background-color: #333;
+    color: #E0E0E0;
+    text-decoration: none;
+    display: inline-block;
+    gap: 10px;
+}
+.btn-support:hover {
+    background-color: #00C8FF;
+    color: #121212;
+    transform: translateY(-2px);
+}
+.btn-support i {
+    margin-right: 8px;
+}

@@ -40,14 +40,34 @@
                 <i class="fa-solid fa-mug-hot"></i>
                 <h3>Gostou do projeto?</h3>
                 <p>Este é um projeto pessoal mantido no meu tempo livre. Se ele foi útil para você, considere uma contribuição para ajudar a manter os servidores no ar (e quem sabe comprar um café para o dev!).</p>
-                <div class="pix-key">
-                    <strong>Chave PIX (E-mail):</strong> <span>sua-chave-pix@email.com</span>
+
+                <div class="pix-key-container">
+                    <div id="qrcodeCanvas" class="pix-qr-code"></div>
+                    <div class="pix-copia-cola">
+                        <p>Ou use a chave (Copia e Cola):</p>
+                        <div class="input-group">
+                            <input type="text" id="pixKeyInput" value="00020126580014BR.GOV.BCB.PIX0136c020f7e1-bf43-417e-a3e5-30e97272b47b5204000053039865802BR5925Gabriel Cezar da Silveira6009SAO PAULO62140510Cu4J7QsPTq63044F82" readonly>
+                            <button id="copyPixBtn">Copiar</button>
+                        </div>
                     </div>
+                </div>
             </section>
         </main>
-    </div>
-
-    <div id="roomContainer" style="display: none;">
+        <section class="support-container">
+        <h3><i class="fa-solid fa-comments"></i> Suporte & Feedback</h3>
+        <p>Encontrou um bug ou tem uma sugestão? Adoraria ouvir!</p>
+        <a href="mailto:contato.dontfile@gmail.com" class="btn btn-support">
+            <i class="fa-solid fa-envelope"></i> Enviar e-mail para contato.dontfile@gmail.com
+        </a>
+    </section>
+        <footer class="site-footer">
+            Feito com <i class="fa-solid fa-heart" style="color: #ff6b6b;"></i> por Gabriel Cézar
+            <span class="footer-separator">|</span>
+            Inspirado no <a href="https://dontpad.com" target="_blank" rel="noopener noreferrer">dontpad.com</a>
+        </footer>
+        </div>
+    
+        <div id="roomContainer" style="display: none;">
         <header class="room-header">
             <a href="/" class="logo">
                 <img src="/favicon.svg" alt="DontFile Logo">
@@ -71,7 +91,14 @@
 
         <div id="filesList" class="files-list">
             </div>
+      <footer class="site-footer">
+          Feito com <i class="fa-solid fa-heart" style="color: #ff6b6b;"></i> por Gabriel Cézar
+          <span class="footer-separator">|</span>
+          Inspirado no <a href="https://dontpad.com" target="_blank" rel="noopener noreferrer">dontpad.com</a>
+      </footer>      
     </div>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
     <script src="script.js"></script>
 </body>

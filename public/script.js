@@ -1,8 +1,13 @@
 // --- 1. LÓGICA PRINCIPAL ---
-const roomName = window.location.pathname.slice(1);
+let roomName = window.location.pathname.slice(1);
 const homeContainer = document.getElementById('homeContainer');
 const roomContainer = document.getElementById('roomContainer');
 
+if (roomName.endsWith('index.html') || roomName === '') {
+    roomName = ''; // Força o script a tratar como homepage
+}
+
+// --- LÓGICA QUE ESTAVA FALTANDO ---
 if (!roomName) {
     // Estamos na Raiz: Mostra a Homepage
     homeContainer.style.display = 'block';
@@ -41,7 +46,33 @@ function setupHomepage() {
             alert("Por favor, digite um nome para a sala.");
         }
     };
+    const copyBtn = document.getElementById('copyPixBtn');
+    const pixInput = document.getElementById('pixKeyInput');
+    const qrCodeContainer = document.getElementById('qrcodeCanvas');
+    const pixKey = pixInput.value;
+    if (qrCodeContainer && pixKey) {
+        new QRCode(qrCodeContainer, {
+            text: pixKey,
+            width: 190,
+            height: 190,
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    }
+    copyBtn.addEventListener('click', () => {
+        pixInput.select();
+        pixInput.setSelectionRange(0, 99999); // Para mobile
 
+        try {
+            navigator.clipboard.writeText(pixInput.value);
+            copyBtn.textContent = 'Copiado!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copiar';
+            }, 2000);
+        } catch (err) {
+            console.error('Falha ao copiar:', err);
+            alert('Falha ao copiar a chave.');
+        }
+    });
     btn.addEventListener('click', goToRoom);
     input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -49,6 +80,9 @@ function setupHomepage() {
         }
     });
 }
+
+    
+
 
 
 // --- 3. FUNÇÕES DA SALA DE ARQUIVOS ---
