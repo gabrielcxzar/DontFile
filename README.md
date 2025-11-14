@@ -50,7 +50,7 @@ Para clonar e rodar este projeto na sua própria máquina:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://[URL-DO-SEU-REPOSITORIO-GIT]
+    git clone **https://github.com/gabrielcxzar/DontFile**
     cd dontfile-main
     ```
 
